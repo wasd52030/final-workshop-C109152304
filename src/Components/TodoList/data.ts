@@ -12,54 +12,63 @@ export const randomStrGenerate = (n: number): string => {
     )
 }
 
-const todos = [
+export interface Todo {
+    id: number
+    title: string
+    content: string
+    done: boolean
+    editing: boolean
+    time: string
+}
+
+const todos: Todo[] = [
     {
         "id": 1,
         "title": randomStrGenerate(5),
         "done": true,
-        "content": randomStrGenerate(50),
+        "content": randomStrGenerate(25),
         "editing": false,
-        "time": "2022-05-10 10:16:28"
+        "time": "2022-05-10 01:16:28 am"
     },
     {
         "id": 2,
         "title": randomStrGenerate(5),
         "done": false,
-        "content": randomStrGenerate(10),
+        "content": randomStrGenerate(25),
         "editing": false,
-        "time": "2022-05-11 10:16:28"
+        "time": "2022-05-11 02:16:28 pm"
     },
     {
         "id": 3,
         "title": randomStrGenerate(5),
         "done": false,
-        "content": randomStrGenerate(50),
+        "content": randomStrGenerate(25),
         "editing": false,
-        "time": "2022-05-12 10:16:28"
+        "time": "2022-05-12 03:16:28 am"
     },
     {
         "id": 4,
         "title": randomStrGenerate(5),
         "done": true,
-        "content": randomStrGenerate(50),
+        "content": randomStrGenerate(25),
         "editing": false,
-        "time": "2022-05-13 10:16:28"
+        "time": "2022-05-13 05:16:28 pm"
     },
     {
         "id": 5,
         "title": randomStrGenerate(5),
         "done": true,
-        "content": randomStrGenerate(50),
+        "content": randomStrGenerate(25),
         "editing": false,
-        "time": "2022-05-14 10:16:28"
+        "time": "2022-05-14 08:16:28 am"
     },
     {
         "id": 6,
         "title": randomStrGenerate(5),
         "done": false,
-        "content": randomStrGenerate(50),
+        "content": randomStrGenerate(25),
         "editing": false,
-        "time": "2022-05-15 10:16:28"
+        "time": "2022-05-15 03:16:28 pm"
     }
 ]
 

@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 import { Modal, Form, Input, Checkbox, DatePicker } from "antd"
 import TextArea from "antd/lib/input/TextArea"
 import * as moment from "moment"
-import Todo from "./TodoDEF"
+import {Todo} from "./data"
 
 interface Props {
     EditHandler: Function,
@@ -38,6 +38,11 @@ export default function TodoEdit(props: Props) {
     const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target
         setTodo({ ...todo, [name]: value })
+    }
+
+    const handleDateChange = (value: moment.Moment | null) => {
+        const t = (value === null) ? '' : value?.format("YYYY-MM-DD hh:mm:ss a")
+        setTodo({ ...todo, time: t })
     }
 
     const handleFinish = () => {
@@ -86,7 +91,7 @@ export default function TodoEdit(props: Props) {
                         name="time"
                         rules={[{ required: true }]}
                     >
-                        <DatePicker showTime onOk={(value) => { setTodo({ ...todo, time: value.format("YYYY-MM-DD hh:mm:ss") }) }} />
+                        <DatePicker showTime onChange={handleDateChange} onOk={handleDateChange} />
                     </Form.Item>
                 </Form>
             </Modal>

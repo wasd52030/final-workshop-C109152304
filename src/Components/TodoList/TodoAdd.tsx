@@ -39,7 +39,13 @@ export default function TodoAdd(p: Props) {
         setTodo({ ...todo, [name]: value })
     }
 
+    const handleDateChange = (value: moment.Moment | null) => {
+        const t = (value === null) ? '' : value?.format("YYYY-MM-DD hh:mm:ss a")
+        setTodo({ ...todo, time: t })
+    }
+
     const handleFinish = () => {
+        console.log(todo)
         p.OnAdd(todo)
         handleClose()
         history.replace("/Todo/All")
@@ -82,7 +88,7 @@ export default function TodoAdd(p: Props) {
                         name="time"
                         rules={[{ required: true }]}
                     >
-                        <DatePicker showTime onOk={(value) => { setTodo({ ...todo, time: value.format("YYYY-MM-DD hh:mm:ss") }) }} />
+                        <DatePicker showTime onChange={handleDateChange} onOk={handleDateChange} />
                     </Form.Item>
                 </Form>
             </Modal>
