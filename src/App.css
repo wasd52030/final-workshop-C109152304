@@ -180,7 +180,7 @@ button {
 	border-color: rgba(175, 47, 47, 0.2);
 }
 
-.clearDone{
+.clearDone {
 	margin: 0 5px;
 	text-decoration: none;
 	cursor: pointer;
@@ -190,7 +190,7 @@ button {
 	text-decoration: underline;
 }
 
-.header{
+.header {
 	display: flex;
 	text-align: center;
 	justify-content: center;
