@@ -1,4 +1,4 @@
-export const randomStrGenerate = (n: number): string => {
+export function randomStrGenerate(n: number): string {
     return (
         Array.from({ length: Math.floor(Math.random() * n + 1) })
             .map(_ => {

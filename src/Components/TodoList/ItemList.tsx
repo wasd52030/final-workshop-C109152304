@@ -1,5 +1,5 @@
 import Item from "./Item"
-import Todo from "./TodoDEF"
+import {Todo} from "./data"
 
 interface Props {
     todos: Todo[],

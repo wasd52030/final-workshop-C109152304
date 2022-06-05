@@ -62,7 +62,7 @@ export default function TodoAdd(p: Props) {
                     <Form.Item
                         label="標題:"
                         name="title"
-                        rules={[{ required: true, max: 20 }]}
+                        rules={[{ required: true, max: 50 }]}
                     >
                         <Input name="title" onChange={handleChange} />
                     </Form.Item>

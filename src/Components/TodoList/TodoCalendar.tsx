@@ -1,14 +1,14 @@
-import { Calendar, Badge } from "antd";
-import { useEffect, useState } from "react";
+import { Calendar, Badge } from "antd"
+import { useEffect, useState } from "react"
 import * as moment from "moment"
-import Todo from "./TodoDEF";
+import { Todo } from "./data"
 
 interface Props {
     list: Todo[]
 }
 
 
-export default function DateOfCalendar(props: Props) {
+export default function TodoCalendar(props: Props) {
 
     const [list, setList] = useState(props.list)
     useEffect(() => {
@@ -24,17 +24,17 @@ export default function DateOfCalendar(props: Props) {
     }
 
     const dateCellRender = (value: moment.Moment) => {
-        const listData = getListData(value);
+        const listData = getListData(value)
         return (
             <ul style={{ listStyle: "none" }}>
                 {listData.map(item => (
-                    <li key={item.content}>
+                    <li key={item.id}>
                         <Badge color={item.done ? "green" : "orange"} text={item.title} />
                     </li>
                 ))}
             </ul>
-        );
-    };
+        )
+    }
 
     return (
         <Calendar dateCellRender={dateCellRender} />

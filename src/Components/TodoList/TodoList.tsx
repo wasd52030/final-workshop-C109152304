@@ -2,12 +2,11 @@ import { useEffect, useState } from "react"
 import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom"
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons"
 import { Result, Button } from "antd"
-import todos from "./data"
 import ItemList from "./ItemList"
 import TodoAdd from "./TodoAdd"
-import Todo from "./TodoDEF"
-import DateOfCalendar from "./dateOfCalendar"
-
+import TodoCalendar from "./TodoCalendar"
+import todos from "./data"
+import { Todo } from "./data"
 
 export default function TodoList() {
     const [list, setList] = useState(todos)
@@ -21,7 +20,6 @@ export default function TodoList() {
             return
         }
         setOptActive(true)
-        console.log(optActive)
     }, [current])
 
     const HandleDoneState = (item: Todo) => {
@@ -31,7 +29,8 @@ export default function TodoList() {
     }
 
     const addHandler = (newTodo: Todo) => {
-        setList([...list, { ...newTodo, id: list.length + 1 }])
+        let maxid = Math.max(...list.map(item => item.id))
+        setList([...list, { ...newTodo, id: maxid + 1 }])
     }
 
     const DeleteHandler = (item: Todo) => {
@@ -50,74 +49,74 @@ export default function TodoList() {
         }))
     }
 
+    const ListHeader = () => {
+        return (
+            <div
+                className="header"
+                style={{ display: "flex", textAlign: "center", borderBottom: "1px solid #ededed" }}
+            >
+                <div style={{ flex: 1, textAlign: "left" }}>
+                    {
+                        <Button
+                            icon={<CheckOutlined style={{ fontSize: "30px" }} />}
+                            style={{ height: "50px", width: "50px", border: "0" }}
+                            onClick={() => {
+                                (list.filter(item => item.done).length === list.length) ?
+                                    setList(list.map(todo => { return { ...todo, done: false } }))
+                                    : setList(list.map(todo => { return { ...todo, done: true } }))
+                            }}
+                        />
+                    }
+                </div>
+                <div style={{ flex: 1 }}>
+                    <TodoAdd OnAdd={addHandler} />
+                </div>
+                <div style={{ flex: 1, textAlign: "right", justifyContent: "center" }}>
+                    {(list.filter(item => item.done).length > 0) && (
+                        <Button
+                            icon={<DeleteOutlined style={{ fontSize: "30px" }} />}
+                            style={{ height: "50px", width: "50px", border: "0" }}
+                            onClick={() => setList(list.filter(item => !item.done))}
+                        />
+                    )}
+                </div>
+            </div>
+        )
+    }
+
     return (
         <>
-            {
-                (optActive) && (
-                    <div
-                        className="header"
-                        style={{ display: "flex", textAlign: "center", borderBottom: "1px solid #ededed" }}
-                    >
-                        <div style={{ flex: 1, textAlign: "left", justifyContent: "center" }}>
-                            {
-                                <Button
-                                    icon={<CheckOutlined style={{ fontSize: "30px" }} />}
-                                    style={{ height: "50px", width: "50px", border: "0" }}
-                                    onClick={() => { setList(list.map(todo => { return { ...todo, done: true } })) }}
-                                />
-                            }
-                        </div>
-                        <div style={{ flex: 1 }}>
-                            <TodoAdd OnAdd={addHandler} />
-                        </div>
-                        <div style={{ flex: 1, textAlign: "right", justifyContent: "center" }}>
-                            {(list.filter(item => item.done).length > 0) && (
-                                <Button
-                                    icon={<DeleteOutlined style={{ fontSize: "30px" }} />}
-                                    style={{ height: "50px", width: "50px", border: "0" }}
-                                    onClick={() => setList(list.filter(item => !item.done))}
-                                />
-                            )}
-                        </div>
-                    </div>
-                )
-            }
+            {optActive && <ListHeader />}
             <Switch>
                 <Route path='/Todo/All'>
-                    {
-                        <ItemList
-                            todos={list}
-                            DoneStateHandler={HandleDoneState}
-                            CatchEdit={CatchEdit}
-                            OnDelete={DeleteHandler}
-                            EditHandler={EditHandler}
-                        />
-                    }
+                    <ItemList
+                        todos={list}
+                        DoneStateHandler={HandleDoneState}
+                        CatchEdit={CatchEdit}
+                        OnDelete={DeleteHandler}
+                        EditHandler={EditHandler}
+                    />
                 </Route>
                 <Route path='/Todo/Done'>
-                    {
-                        <ItemList
-                            todos={list.filter(item => item.done === true)}
-                            DoneStateHandler={HandleDoneState}
-                            CatchEdit={CatchEdit}
-                            OnDelete={DeleteHandler}
-                            EditHandler={EditHandler}
-                        />
-                    }
+                    <ItemList
+                        todos={list.filter(item => item.done === true)}
+                        DoneStateHandler={HandleDoneState}
+                        CatchEdit={CatchEdit}
+                        OnDelete={DeleteHandler}
+                        EditHandler={EditHandler}
+                    />
                 </Route>
                 <Route path='/Todo/UnDone'>
-                    {
-                        <ItemList
-                            todos={list.filter(item => item.done !== true)}
-                            DoneStateHandler={HandleDoneState}
-                            CatchEdit={CatchEdit}
-                            OnDelete={DeleteHandler}
-                            EditHandler={EditHandler}
-                        />
-                    }
+                    <ItemList
+                        todos={list.filter(item => item.done !== true)}
+                        DoneStateHandler={HandleDoneState}
+                        CatchEdit={CatchEdit}
+                        OnDelete={DeleteHandler}
+                        EditHandler={EditHandler}
+                    />
                 </Route>
                 <Route path='/Todo/Calendar'>
-                    <DateOfCalendar list={list} />
+                    <TodoCalendar list={list} />
                 </Route>
 
                 {/* default route */}

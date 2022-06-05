@@ -1,6 +1,7 @@
-import Todo from "./TodoDEF"
-import TodoEdit from "./TodoEdit"
 import { ClockCircleOutlined } from "@ant-design/icons"
+import {Todo} from "./data"
+import TodoEdit from "./TodoEdit"
+
 
 interface Props {
     todo: Todo,

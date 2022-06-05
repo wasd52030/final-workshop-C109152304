@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import { Layout, Menu } from 'antd'
 import { Content, Header } from 'antd/lib/layout/layout'
 import TodoList from './Components/TodoList/TodoList'
-import { randomStrGenerate } from './Components/TodoList/data'
 import "./App.css"
 
 function App() {
