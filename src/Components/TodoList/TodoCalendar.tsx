@@ -1,6 +1,6 @@
 import { Calendar, Badge } from "antd"
 import { useEffect, useState } from "react"
-import * as moment from "moment"
+import moment from "moment"
 import { Todo } from "./data"
 
 interface Props {

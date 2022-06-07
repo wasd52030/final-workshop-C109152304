@@ -15,11 +15,11 @@ export default function TodoList() {
     const current = useLocation()
 
     useEffect(() => {
-        if (current.pathname.indexOf('Calendar') > 0) {
-            setOptActive(false)
+        if (current.pathname.indexOf('Todo') > 0 && current.pathname.indexOf('Calendar') < 0) {
+            setOptActive(true)
             return
         }
-        setOptActive(true)
+        setOptActive(false)
     }, [current])
 
     const HandleDoneState = (item: Todo) => {
@@ -37,12 +37,6 @@ export default function TodoList() {
         setList(list.filter(todo => todo.id !== item.id))
     }
 
-    const CatchEdit = (item: Todo) => {
-        setList(list.map(todo => {
-            return todo.id === item.id ? { ...item, editing: !item.editing } : todo
-        }))
-    }
-
     const EditHandler = (item: Todo) => {
         setList(list.map(todo => {
             return todo.id === item.id ? item : todo
@@ -51,10 +45,7 @@ export default function TodoList() {
 
     const ListHeader = () => {
         return (
-            <div
-                className="header"
-                style={{ display: "flex", textAlign: "center", borderBottom: "1px solid #ededed" }}
-            >
+            <div className="listHeader">
                 <div style={{ flex: 1, textAlign: "left" }}>
                     {
                         <Button
@@ -92,7 +83,6 @@ export default function TodoList() {
                     <ItemList
                         todos={list}
                         DoneStateHandler={HandleDoneState}
-                        CatchEdit={CatchEdit}
                         OnDelete={DeleteHandler}
                         EditHandler={EditHandler}
                     />
@@ -101,7 +91,6 @@ export default function TodoList() {
                     <ItemList
                         todos={list.filter(item => item.done === true)}
                         DoneStateHandler={HandleDoneState}
-                        CatchEdit={CatchEdit}
                         OnDelete={DeleteHandler}
                         EditHandler={EditHandler}
                     />
@@ -110,7 +99,6 @@ export default function TodoList() {
                     <ItemList
                         todos={list.filter(item => item.done !== true)}
                         DoneStateHandler={HandleDoneState}
-                        CatchEdit={CatchEdit}
                         OnDelete={DeleteHandler}
                         EditHandler={EditHandler}
                     />
@@ -124,22 +112,18 @@ export default function TodoList() {
                     <Redirect to='/Todo/All' />
                 </Route>
 
-                <Route
-                    render={() => {
-                        return (
-                            <Result
-                                status="404"
-                                title="404"
-                                subTitle="Sorry, the page you visited does not exist."
-                                extra={
-                                    <Button type="primary" onClick={() => history.replace('/Todo/All')}>
-                                        Back Home
-                                    </Button>
-                                }
-                            />
-                        )
-                    }}
-                />
+                <Route>
+                    <Result
+                        status="404"
+                        title="404"
+                        subTitle="Sorry, the page you visited does not exist."
+                        extra={
+                            <Button type="primary" onClick={() => history.replace('/Todo/All')}>
+                                Back Home
+                            </Button>
+                        }
+                    />
+                </Route>
             </Switch>
         </>
     )

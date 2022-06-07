@@ -1,12 +1,12 @@
 import { ClockCircleOutlined } from "@ant-design/icons"
-import {Todo} from "./data"
+import { Todo } from "./data"
+import TodoDelete from "./TodoDelete"
 import TodoEdit from "./TodoEdit"
 
 
 interface Props {
     todo: Todo,
     DoneStateHandler: Function,
-    CatchEdit: Function,
     OnDelete: Function,
     EditHandler: Function,
     index: number
@@ -21,13 +21,15 @@ export default function Item(props: Props) {
                 checked={props.todo.done}
                 onChange={() => { props.DoneStateHandler(props.todo) }}
             />
-            <label style={{ display: "flex" }}>
+            <label>
                 <div className="desc">
-                    <div className="title">
-                        {props.todo.title}
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <div className="title">
+                            {props.todo.title}
+                        </div>
                         <div className="time">
                             <ClockCircleOutlined style={{ marginLeft: "20px" }} />
-                            <div>{props.todo.time}</div>
+                            <div>{props.todo.time.format("YYYY-MM-DD hh:mm a")}</div>
                         </div>
                     </div>
                     <div className="content">{props.todo.content}</div>
@@ -39,7 +41,7 @@ export default function Item(props: Props) {
                         <TodoEdit Todo={props.todo} EditHandler={props.EditHandler} />
                     )
                 }
-                <button className="destroy" onClick={() => props.OnDelete(props.todo)}></button>
+                <TodoDelete OnDelete={props.OnDelete} todo={props.todo} />
             </div>
             <div style={{ clear: "both" }}></div>
         </li>

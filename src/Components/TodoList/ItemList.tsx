@@ -4,7 +4,6 @@ import {Todo} from "./data"
 interface Props {
     todos: Todo[],
     DoneStateHandler: Function,
-    CatchEdit: Function,
     OnDelete: Function,
     EditHandler: Function,
 }
@@ -20,7 +19,6 @@ export default function ItemList(props: Props) {
                             index={index}
                             todo={item}
                             DoneStateHandler={props.DoneStateHandler}
-                            CatchEdit={props.CatchEdit}
                             OnDelete={props.OnDelete}
                             EditHandler={props.EditHandler}
                         />

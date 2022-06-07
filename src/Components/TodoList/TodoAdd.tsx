@@ -1,24 +1,17 @@
 import React, { useState } from "react"
-import { useHistory } from "react-router-dom"
 import { Button, Modal, Form, Input, Checkbox, DatePicker } from "antd"
 import { PlusOutlined } from "@ant-design/icons"
-import TextArea from "antd/lib/input/TextArea"
+import moment from "moment";
+import { shootMessage } from "../../utils"
+
 
 interface Props {
     OnAdd: Function
 }
 
 export default function TodoAdd(p: Props) {
-
-    const [todo, setTodo] = useState({
-        title: "",
-        done: false,
-        editing: false,
-        time: ""
-    })
     const [visible, setVisible] = useState(false)
     const [form] = Form.useForm()
-    const history = useHistory()
 
     const showModal = () => {
         setVisible(true)
@@ -29,26 +22,19 @@ export default function TodoAdd(p: Props) {
         form.resetFields()
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        setTodo({ ...todo, [name]: value })
-    }
+    const handleFinish = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        e.preventDefault()
+        form.validateFields()
+            .then((value) => {
+                p.OnAdd({ ...value })
+                handleClose()
+            })
+            .catch((err) => {
+                console.error(err)
+                handleClose()
+            })
 
-    const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const { name, value } = e.target
-        setTodo({ ...todo, [name]: value })
-    }
-
-    const handleDateChange = (value: moment.Moment | null) => {
-        const t = (value === null) ? '' : value?.format("YYYY-MM-DD hh:mm:ss a")
-        setTodo({ ...todo, time: t })
-    }
-
-    const handleFinish = () => {
-        console.log(todo)
-        p.OnAdd(todo)
-        handleClose()
-        history.replace("/Todo/All")
+        shootMessage("success", "新增成功", "已成功新增待辦事項！", 2)
     }
 
     return (
@@ -57,38 +43,44 @@ export default function TodoAdd(p: Props) {
                 type="primary" shape="circle" icon={<PlusOutlined />} onClick={showModal}
                 style={{ transform: "translateY(25px)", height: "45px", width: "45px" }}
             />
-            <Modal visible={visible} onOk={form.submit} onCancel={handleClose} forceRender>
-                <Form form={form} onFinish={handleFinish} style={{ marginTop: "20px" }}>
+            <Modal visible={visible} onOk={handleFinish} onCancel={handleClose} destroyOnClose={true} forceRender>
+                <Form
+                    form={form} name="add" style={{ marginTop: "20px" }}
+                    initialValues={{ time: moment(), done: false }}
+                >
+
                     <Form.Item
                         label="標題:"
                         name="title"
+                        hasFeedback
                         rules={[{ required: true, max: 50 }]}
                     >
-                        <Input name="title" onChange={handleChange} />
+                        <Input />
                     </Form.Item>
                     <Form.Item
-                        name="title"
-                        valuePropName="done"
+                        name="done"
+                        label="完成了?"
+                        rules={[{ required: true }]}
+                        valuePropName="checked"
+                        hasFeedback
                     >
-                        <Checkbox
-                            onChange={(e) => { setTodo({ ...todo, "done": e.target.checked }) }}
-                        >
-                            完成了?
-                        </Checkbox>
+                        <Checkbox />
                     </Form.Item>
                     <Form.Item
                         label="說明"
                         name="content"
+                        hasFeedback
                         rules={[{ required: true }]}
                     >
-                        <TextArea name="content" cols={30} rows={5} onChange={handleContentChange} />
+                        <Input.TextArea cols={30} rows={5} />
                     </Form.Item>
                     <Form.Item
                         label="日期"
                         name="time"
+                        hasFeedback
                         rules={[{ required: true }]}
                     >
-                        <DatePicker showTime onChange={handleDateChange} onOk={handleDateChange} />
+                        <DatePicker showTime={{ format: "HH:mm" }} format="YYYY-MM-DD HH:mm" />
                     </Form.Item>
                 </Form>
             </Modal>

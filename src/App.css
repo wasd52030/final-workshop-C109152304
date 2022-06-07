@@ -14,12 +14,6 @@ button {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.spanInput {
-	float: left;
-	height: 30px;
-	line-height: 30px;
-}
-
 .formLabel {
 	margin-right: 5px;
 }
@@ -27,12 +21,17 @@ button {
 .App {
 	background: #fff;
 	margin: 0 0 40px 0;
-	position: relative;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
 		0 8px 0 -3px #f6f6f6,
 		0 9px 1px -3px rgba(0, 0, 0, 0.2),
 		0 16px 0 -6px #f6f6f6,
 		0 17px 2px -6px rgba(0, 0, 0, 0.2);
+}
+
+.listHeader{
+	display: flex;
+	text-align: center;
+	border-bottom: 1px solid #ededed;
 }
 
 .todo-list {
@@ -90,8 +89,6 @@ button {
 }
 
 .todo-list li label .desc .title {
-	display: flex;
-	align-items: center;
 	font-size: 24px;
 }
 
@@ -99,9 +96,8 @@ button {
 	font-size: 14px;
 }
 
-.todo-list li label .desc .title .time {
+.todo-list li label .desc .time {
 	display: flex;
-	text-align: center;
 	font-size: 14px;
 }
 
@@ -126,7 +122,7 @@ button {
 	color: #af5b5e;
 }
 
-/*UTF-8圖形參考 https://www.wfublog.com/2015/06/unicode-emoji-special-character-table.html*/
+/* UTF-8圖形參考 https://www.wfublog.com/2015/06/unicode-emoji-special-character-table.html */
 .todo-list li .destroy:after {
 	content: '\2716';
 }
@@ -141,55 +137,9 @@ button {
 	color: #b9da8d;
 }
 
-/*UTF-8圖形參考 https://www.wfublog.com/2015/06/unicode-emoji-special-character-table.html*/
+/* UTF-8圖形參考 https://www.wfublog.com/2015/06/unicode-emoji-special-character-table.html */
 .todo-list li .edit:after {
 	display: block;
 	content: '\2712';
 	transform: rotate(195deg);
-}
-
-.header .filters {
-	text-align: center;
-	margin: 0;
-	padding: 0;
-	right: 0;
-	left: 0;
-	padding: 10px 15px;
-}
-
-.filters li {
-	height: 20px;
-	padding: 10px 15px;
-	display: inline;
-}
-
-.filters li a {
-	color: inherit;
-	margin: 3px;
-	padding: 3px 7px;
-	text-decoration: none;
-	border: 1px solid transparent;
-	border-radius: 3px;
-}
-
-.filters li a:hover {
-	border-color: rgba(175, 47, 47, 0.1);
-}
-
-.filters li a.selected {
-	border-color: rgba(175, 47, 47, 0.2);
-}
-
-.clearDone {
-	margin: 0 5px;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.clearDone:hover {
-	text-decoration: underline;
-}
-
-.header {
-	display: flex;
 }
